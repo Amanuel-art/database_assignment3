@@ -1,7 +1,7 @@
 const router = require("express").Router()
   var crypto = require("crypto")
  var db = require("../database/databaseConnection");
-
+var userId=1;
 router.get("/", (req, res) => {
   if (req.user) return res.redirect("/library");
   res.render("register", { user: null, err: null });
@@ -16,17 +16,17 @@ router.post("/", (req, res, next) => {
       .update(req.body.email)
       .digest("hex"),
     user = {
+      user_id:userId++,
       fullName: req.body.name,
       email: req.body.email,
       pass: passEncrypted,
-      admin: 0,
+      admin: 1,
       active: 1
     };
 
   db.query(usersql, user, (err) => {
     if (err) 
-    console.log(err)
-    /* return res.render("register", { user: null, err: "no" }); */
+    return res.render("register", { user: null, err: "no" });
 
     db.query(
       `SELECT * FROM users

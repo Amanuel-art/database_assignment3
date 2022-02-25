@@ -7,12 +7,12 @@ router.get("/", (req, res) => {
 
   db.query(`SELECT * FROM cars;`, (err, result) => {
     db.query(
-      `SELECT * FROM reservations
-    JOIN cars ON reservations.car_id=cars.car_id
-    WHERE DATE(reservations.dateOut)>=CURDATE();`,
+      `SELECT * FROM reservation
+    JOIN cars ON reservation.car_id=cars.car_id
+    WHERE DATE(reservation.dateOut)>=CURDATE();`,
       (err1, result1) => {
         db.query(
-          `SELECT idUser, fullName, email, admin, active
+          `SELECT user_id, fullName, email, admin, active
       FROM users;`,
           (err2, result2) => {
             res.render("admin", {
@@ -66,8 +66,8 @@ router.get("/resv/:res_id", (req, res) => {
 
   db.query(
     `SELECT *
-    FROM ((reservations JOIN cars ON reservations.car_id=cars.car_id)
-    JOIN users ON reservations.idUser=users.user_id)
+    FROM ((reservation JOIN cars ON reservation.car_id=cars.car_id)
+    JOIN users ON reservation.user_id=users.user_id)
     WHERE idReservation LIKE ?
     AND DATE(dateOut)>=CURDATE();`,
     req.params.res_id,
@@ -91,7 +91,7 @@ router.get("/user/:user_id", (req, res) => {
   if (!req.user.admin) return res.redirect("/library/");
 
   db.query(
-    `SELECT idUser, fullName, email, admin, active FROM users
+    `SELECT user_id, fullName, email, admin, active FROM users
     WHERE user_id LIKE ?;`,
     req.params.user_id,
     (err, result) => {
@@ -143,7 +143,7 @@ router.post("/editRes/:res_id", (req, res) => {
   if (!req.user.admin) return res.redirect("/library/");
 
   db.query(
-    `UPDATE reservations
+    `UPDATE reservation
     SET fullPrice=?,
       active=?,
       dateIn=?,
@@ -168,7 +168,7 @@ router.post("/rem/:res_id/", (req, res) => {
   if (!req.user.admin) return res.redirect("/library/");
 
   db.query(
-    `DELETE FROM reservations
+    `DELETE FROM reservation
     WHERE idReservation LIKE ?;`,
     req.params.res_id,
     (err) => {

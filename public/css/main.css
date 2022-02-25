@@ -27,7 +27,7 @@ main::after {
   right: 0;
   bottom: 0;
   margin: 0 auto;
-  background: url("/images/logo.jpg") no-repeat center center;
+  background: url("/images/marslogo.jpg") no-repeat center center;
 }
 
 @-webkit-keyframes animatebottom {
@@ -82,7 +82,7 @@ input::-webkit-input-placeholder {
 }
 
 .jumbotron {
-  background-image: url("/images/jumbo1.jpg");
+  background-image: url("/images/jumbo.jpg");
   background-size: cover;
   color: white;
   position: relative;

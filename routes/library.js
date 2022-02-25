@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     AND DATE(dateOut)>=CURDATE()
     AND reservation.active NOT LIKE 0
     AND cars.active NOT LIKE 0;`,
-    req.user.idUser,
+    req.user.user_id,
     (err, result) => {
       if (!result.length)
         return res.render("library", {

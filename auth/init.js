@@ -1,18 +1,18 @@
-const crypto = require("crypto"),
-  passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy,
-  authenticationMiddleware = require("./middleware"),
-  db = require("../database/databaseConnection");
+ var crypto = require("crypto")
+ var passport = require("passport")
+ var LocalStrategy = require("passport-local").Strategy
+ var authenticationMiddleware = require("./middleware")
+ var db = require("../database/databaseConnection");
 
 passport.serializeUser((user, done) => {
-  done(null, user.idUser);
+  done(null, user.user_id);
 });
 
-passport.deserializeUser((idUser, done) => {
+passport.deserializeUser((user_id, done) => {
   db.query(
-    `SELECT idUser, fullName, email, admin, active FROM users
-    WHERE idUser LIKE ?;`,
-    idUser,
+    `SELECT user_id, fullName, email, admin, active FROM users
+    WHERE user_id LIKE ?;`,
+    user_id,
     (err, result) => {
       done(err, result[0]);
     }

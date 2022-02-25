@@ -2,8 +2,10 @@ const router = require("express").Router()
 var passport = require("passport");
 
 router.get("/", (req, res) => {
-  if (req.user) return res.redirect("/library");
+  if (req.user) 
+  return res.redirect("/library");
   res.render("login", { user: null, err: req.query.err });
+
 });
 
 router.post(

@@ -1,6 +1,6 @@
 const router = require("express").Router()
   var db = require("../database/databaseConnection");
-
+   var reserve_id=1;
 router.get("/", (req, res) => {
   res.redirect("/");
 });
@@ -58,12 +58,14 @@ router.post("/add/:car_id", (req, res) => {
   if (!req.user) return res.redirect("/");
 
   const resv = {
-    active: 1,
-    idUser: req.user.idUser,
-    dateIn: req.body.dateIn,
-    idCar: req.params.car_id,
-    dateOut: req.body.dateOut,
+    idReservation:reserve_id++,
+    car_id: req.params.car_id,
+    userFullName: req.user.fullName,
+    user_id: req.user.user_id,
     fullPrice: req.body.numbers,
+    dateIn: req.body.dateIn,
+    dateOut: req.body.dateOut,
+    active: 1
   };
 
   db.query(`INSERT into reservation SET ?`, resv, (err) => {

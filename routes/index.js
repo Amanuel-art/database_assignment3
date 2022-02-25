@@ -14,8 +14,8 @@ router.get("/", (req, res) => {
   );
 });
 
-router.post("/find", (req, res) => {
+/* router.post("/find", (req, res) => {
   return res.redirect("/data/" + req.body.item);
-});
+}); */
 
 module.exports = router;
